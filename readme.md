@@ -67,7 +67,7 @@ Add a layouts directory and into it `index.html`:
 
 ```html
 <!DOCTYPE html>
-<html>
+<html ng-app='pirateApp'>
 
 <head>
 	<title>AngularJS Pirates</title>
@@ -103,6 +103,8 @@ app.get('/', function(req, res) {
 });
 ```
 
+(See this [post](http://stackoverflow.com/questions/8131344/what-is-the-difference-between-dirname-and-in-node-js) and Node [documentation](https://nodejs.org/api/globals.html#globals_dirname) for information on `path` and `__dirname`.)
+
 Create css, js, and img folders in static or reuse the assets material.
 
 Populate the js folder with app.js:
@@ -115,33 +117,17 @@ Now we can access the page at localhost://300X however the we need to configure 
 
 Add a static directory for our assets to server.js
 
-`app.use(express.static('static'))`
+`app.use(express.static('assets'))`
 
-Add a ngApp:
-
-```html
-<!DOCTYPE html>
-<html ng-app='pirateApp'>
-
-<head>
-	<title>AngularJS Pirates</title>
-	<link rel="stylesheet" href="css/styles.css">
-	<script src="https://code.angularjs.org/1.5.8/angular.js"></script>
-	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
-	<script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
-	<script src="js/app.js"></script>
-</head>
-
-<body>
-	<h1>test</h1>
-</body>
-</html>
-```
+Add js/app.js.
 
 Let's run a simple test by pulling in data from another API.
 
-```
-angular.module('pirateApp', []).controller('Hello', function ($scope, $http) {
+app.js:
+
+```js
+angular.module('pirateApp', [])
+.controller('PirateAppController', function ($scope, $http) {
     $http.get('http://rest-service.guides.spring.io/greeting').
         then(function (response) {
             $scope.greeting = response.data;
@@ -152,7 +138,7 @@ angular.module('pirateApp', []).controller('Hello', function ($scope, $http) {
 Add to index.html:
 
 ```html
-<body ng-controller="Hello">
+<body ng-controller="PirateAppController">
     <h1>Testing</h1>
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
@@ -185,11 +171,15 @@ angular.module('pirateApp', [])
 </body>
 ```
 
+Add link to `css/styles.css`
+
 ###Deleting a Pirate
 
 As a starting point reuse the array script. Recall the script from a previous lesson:
 
-```
+In app.js:
+
+```js
 $scope.deletePirate = function(index) {
 	$scope.pirates.splice(index, 1);
 }
@@ -206,15 +196,16 @@ Wire up the deletePirate function:
 </ul>
 ```
 
-```
+```js
 $scope.deletePirate = function(pid) {
 	$http.delete('/api/pirates/' + pid);
+    // $scope.pirates.splice(index, 1);
 }
 ```
 
 But this has no effect on $scope
 
-```
+```js
 $scope.deletePirate = function (index, pid) {
     console.log(pid);
     $http.delete('/api/pirates/' + pid)
@@ -235,9 +226,7 @@ $scope.deletePirate = function (index, pid) {
 
 ===
 
-
-
-Add pirate -
+####Add Pirate
 
 ```
 $scope.addPirate = function (data) {
