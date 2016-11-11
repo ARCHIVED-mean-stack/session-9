@@ -30,10 +30,10 @@ exports.add = function (req, res) {
 Restart the server. Use cURL to POST to the add endpoint with the full Pirate JSON as the request body (making sure to check the URL port and path).
 
 ```
-$ curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "Jean Lafitte", "vessel": "Barataria Bay", "weapon":"curses"}' http://localhost:3001/api/pirates
+$ curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "Jean Lafitte", "vessel": "Barataria Bay", "weapon":"curses"}' http://localhost:3004/api/pirates
 ```
 
-We will also create a new Pirate in Postman.
+We will also create a new POST request in Postman.
 
 ![Image of chart](https://github.com/mean-fall-2016/session-8/blob/master/assets/img/postman2.png)
 
@@ -56,7 +56,7 @@ exports.delete = function (req, res) {
 Restart, and check it out with:
 
 ```
-$ curl -i -X DELETE http://localhost:3001/pirates/5820d3584dc4674967d091e6
+$ curl -i -X DELETE http://localhost:3004/pirates/5820d3584dc4674967d091e6
 ```
 
 Create and test a delete Pirate action in Postman.
