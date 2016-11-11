@@ -4,9 +4,19 @@ We are continuing from last week's Rest API session.
 
 ===
 
+Install the dependencies `npm install` and run the app `nodemon server.js`. Go to `http://localhost:3004/api/pirates` to see the current crop of pirates. If none use `/api/import`.
+
+Test the current api's in Postman - 
+
+- get `localhost:3004/api/pirates`
+- get `localhost:3004/api/pirates/582280a9684c9c10232226ea`
+- put `localhost:3004/api/pirates/582280a9684c9c10232226ea` with `{ "name": "Test Tester" }` and check at `localhost:3004/api/pirates`
+
 ####Add
 
-We used create() earlier to add multiple documents to our Pirates Mongo collection. Our POST handler uses the same method to add one new Pirate to the collection. Once added, the response is the full new Pirate's JSON object.
+We used create() to import multiple documents to our Pirates Mongo collection. Our POST handler uses the same method to add one new Pirate to the collection. Once added, the response is the full new Pirate's JSON object.
+
+Add to `controllers/pirates.js`
 
 ```js
 exports.add = function (req, res) {
