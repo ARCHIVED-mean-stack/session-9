@@ -228,12 +228,16 @@ $scope.deletePirate = function (index, pid) {
 
 ####Add Pirate
 
-```
+
+In app.js:
+
+```js
 $scope.addPirate = function (data) {
     $http.post('/api/pirates/', data)
     .success(function(){
         $scope.pirates.push(data);
     })
+}
 ```
 
 ```
@@ -245,36 +249,22 @@ $scope.addPirate = function (data) {
 </form>
 ```
 
-Create a component 
+Adjust css 
+
+```css
+input[type="submit"],
+button {}
+```
+
+And test.
+
+###Create a Component 
 
 Start by editing app.js to contain just the module declaration
 
-Save the rest into a new file called app.component.js
+Save the rest into a new file called `pirates-view.component.js`:
 
-Edit the html to create a link to the detail:
-
-```
-<li ng-repeat="pirate in pirates">
-    <a href="/api/pirates/{{ pirate._id }}">{{ pirate.name }}</a>
-    <span ng-click="deletePirate($index, pirate._id)">X</span>
-</li>
-```
-This links to the api page for now:
-
-`<a href="/api/pirates/{{ pirate._id }}">{{ pirate.name }}</a>`
-
-This means we are creating a component:
-
-```
-<body>
-	<div>
-		<h1>Pirates</h1>
-		<pirates-view></pirates-view>
-	</div>
-</body>
-```
-
-Create the component 
+Edit the component 
 
 ```js
 angular.module('pirateApp', []).component('piratesView', {
@@ -305,9 +295,18 @@ angular.module('pirateApp', []).component('piratesView', {
 });
 ```
 
-and the html
+Edit the html to create a link to the detail. Use the api Uri for now:
 
 ```
+<li ng-repeat="pirate in pirates">
+    <a href="/api/pirates/{{ pirate._id }}">{{ pirate.name }}</a>
+    <span ng-click="deletePirate($index, pirate._id)">X</span>
+</li>
+```
+
+Copy the HTML into `assets/templates/pirates-view.html`:
+
+```html
 <ul>
 	<li ng-repeat="pirate in pirates">
 		<a href="/api/pirates/{{ pirate._id }}">{{ pirate.name }}</a>
@@ -323,6 +322,17 @@ and the html
 </form>
 ```
 
+And edit the body:
+
+```
+<body>
+	<div>
+		<h1>Pirates</h1>
+		<pirates-view></pirates-view>
+	</div>
+</body>
+```
+
 Link it to the main index page:
 
 ```
@@ -336,7 +346,7 @@ Link it to the main index page:
 	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
 	<script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
 	<script src="js/app.js"></script>
-	<script src="js/app.component.js"></script>
+	<script src="js/pirates-view.component.js"></script>
 </head>
 
 <body>
@@ -351,7 +361,9 @@ Link it to the main index page:
 
 And test
 
-Next - 
+####Pirate Detail
+
+index.html:
 
 ```
 <body>
@@ -362,11 +374,9 @@ Next -
 </body>
 ```
 
-Note - changed app.component.js to pirate-view.component.js
+`ng-view` implies `ng-route`
 
-This means ngRoute (ng-view)
-
-###Routing in Angular
+####Routing in Angular
 
 Add routing and component for piratesView.
 
