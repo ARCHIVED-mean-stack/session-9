@@ -378,15 +378,15 @@ index.html:
 
 ####Routing in Angular
 
-Add routing and component for piratesView.
+Add routing and component for pirate details.
 
 This can be tricky. Make sure to run through this again.
 
-- check that routing is loaded in index.html
+- check that routing is loaded in index.html via `<script>` tag
 - in app.js inject the routing: `angular.module('pirateApp', ['ngRoute']);`
-- inject pirates-view `angular.module('pirateApp', ['ngRoute', 'piratesView']);`
-- create `pirates-view.component.js` as `angular.module('piratesView', []);` in js folder
-- add `app.config` to static js folder
+- in app.js inject piratesView: `angular.module('pirateApp', ['ngRoute', 'piratesView']);`
+- create `pirates-view.module.js` as `angular.module('piratesView', []);` in js folder
+- add `app.config.js` to static js folder
 - add `<script src="js/app.config.js"></script>` to index.html
 
 app.config:
