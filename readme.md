@@ -2,6 +2,231 @@
 
 We are continuing from last week's Rest API session.
 
+===
+
+####Add
+
+We used create() earlier to add multiple documents to our Pirates Mongo collection. Our POST handler uses the same method to add one new Pirate to the collection. Once added, the response is the full new Pirate's JSON object.
+
+```js
+exports.add = function (req, res) {
+    Pirate.create(req.body, function (err, pirate) {
+        if (err) return console.log(err);
+        return res.send(pirate);
+    });
+}
+```
+
+Restart the server. Use cURL to POST to the add endpoint with the full Pirate JSON as the request body (making sure to check the URL port and path).
+
+```
+$ curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "Jean Lafitte", "vessel": "Barataria Bay", "weapon":"curses"}' http://localhost:3001/api/pirates
+```
+
+We will also create a new Pirate in Postman.
+
+![Image of chart](https://github.com/mean-fall-2016/session-8/blob/master/assets/img/postman2.png)
+
+Refresh `http://localhost:3001/pirates` to see the new entry at the end.
+
+
+####Delete
+
+Our final REST endpoint, delete, reuses what we've done above. Add this to controllers/pirates.js.
+
+```js
+exports.delete = function (req, res) {
+    var id = req.params.id;
+    Pirate.remove({ '_id': id }, function (result) {
+        return res.send(result);
+    });
+};
+```
+
+Restart, and check it out with:
+
+```
+$ curl -i -X DELETE http://localhost:3001/pirates/5820d3584dc4674967d091e6
+```
+
+Create and test a delete Pirate action in Postman.
+
+##Building a Front End for Our API
+
+Add a layouts directory and into it `index.html`:
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>AngularJS Pirates</title>
+	<script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
+	<script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
+	<script src="js/app.js"></script>
+</head>
+
+<body>
+	<h1>test</h1>
+</body>
+</html>
+```
+
+Note - this page is unavaiable (even if it is in the root directory).
+
+Add this route to server.js:
+
+```js
+app.get('/', function(req, res) {
+    res.sendfile('./layouts/index.html')
+})
+```
+
+Note - `express deprecated res.sendfile: Use res.sendFile instead`
+
+```
+var path = require('path');
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname + '/layouts/index.html'));
+});
+```
+
+Create css, js, and img folders in static or reuse the assets material.
+
+Populate the js folder with app.js:
+
+```js
+angular.module('pirateApp', []);
+```
+
+Now we can access the page at localhost://300X however the we need to configure a static assets directory.
+
+Add a static directory for our assets to server.js
+
+`app.use(express.static('static'))`
+
+Add a ngApp:
+
+```html
+<!DOCTYPE html>
+<html ng-app='pirateApp'>
+
+<head>
+	<title>AngularJS Pirates</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<script src="https://code.angularjs.org/1.5.8/angular.js"></script>
+	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
+	<script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
+	<script src="js/app.js"></script>
+</head>
+
+<body>
+	<h1>test</h1>
+</body>
+</html>
+```
+
+Let's run a simple test by pulling in data from another API.
+
+```
+angular.module('pirateApp', []).controller('Hello', function ($scope, $http) {
+    $http.get('http://rest-service.guides.spring.io/greeting').
+        then(function (response) {
+            $scope.greeting = response.data;
+        });
+});
+```
+
+Add to index.html:
+
+```html
+<body ng-controller="Hello">
+    <h1>Testing</h1>
+    <p>The ID is {{greeting.id}}</p>
+    <p>The content is {{greeting.content}}</p>
+</body>
+```
+
+Now let's use our own:
+
+```js
+angular.module('pirateApp', [])
+    .controller('PirateAppController', function ($scope, $http) {
+        $http.get('/api/pirates').
+            then(function (response) {
+                $scope.pirates = response.data;
+                console.log($scope.pirates);
+            });
+    });
+```
+
+
+```html
+<body ng-controller="PirateAppController">
+	<h1>Pirates</h1>
+	<ul>
+		<li ng-repeat="pirate in pirates">
+			{{ pirate.name }}
+			<span>X</span>
+		</li>
+	</ul>
+</body>
+```
+
+###Deleting a Pirate
+
+As a starting point reuse the array script. Recall the script from a previous lesson:
+
+```
+$scope.deletePirate = function(index) {
+	$scope.pirates.splice(index, 1);
+}
+```
+
+Wire up the deletePirate function:
+
+```
+<ul>
+	<li ng-repeat="pirate in pirates">
+		{{ pirate.name }} | {{ pirate._id }}
+		<span ng-click="deletePirate(pirate._id)">X</span>
+	</li>
+</ul>
+```
+
+```
+$scope.deletePirate = function(pid) {
+	$http.delete('/api/pirates/' + pid);
+}
+```
+
+But this has no effect on $scope
+
+```
+$scope.deletePirate = function (index, pid) {
+    console.log(pid);
+    $http.delete('/api/pirates/' + pid)
+    .success(function(){
+        $scope.pirates.splice(index, 1);
+    })
+}
+```
+
+```
+<ul>
+	<li ng-repeat="pirate in pirates">
+		{{ pirate.name }} {{ pirate._id }}
+		<span ng-click="deletePirate($index, pirate._id)">X</span>
+	</li>
+</ul>
+```
+
+===
+
+
+
 Add pirate -
 
 ```
