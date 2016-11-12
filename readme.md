@@ -267,7 +267,7 @@ Save the rest into a new file called `pirates-view.component.js`:
 Edit the component 
 
 ```js
-angular.module('pirateApp', []).component('piratesView', {
+angular.module('piratesView', []).component('piratesView', {
 	templateUrl: '/templates/pirates-view.html',
 	controller: function PirateAppController($scope, $http) {
 		var self = this;
@@ -388,6 +388,7 @@ This can be tricky. Make sure to run through this again.
 - create `pirates-view.module.js` as `angular.module('piratesView', []);` in js folder
 - add `app.config.js` to static js folder
 - add `<script src="js/app.config.js"></script>` to index.html
+- add `<script src="js/pirates-view.module.js"></script>` to index.html
 
 app.config:
 
@@ -428,7 +429,7 @@ angular.module('pirateDetail').component('pirateDetail', {
 
     controller: ['$http', '$routeParams',
         function PirateDetailController($http, $routeParams) {
-            this.pirateId = $routeParams.pirateId;
+            var self = this;
         }
     ]
 }); 
@@ -436,15 +437,8 @@ angular.module('pirateDetail').component('pirateDetail', {
 
 In pirates-view.html we are currently going to an api endpoint `/api/pirates/{{ pirate._id }}` :
 
-```
-<li ng-repeat="pirate in pirates">
-	<a href="/api/pirates/{{ pirate._id }}">{{ pirate.name }}</a>
-	<span ng-click="$ctrl.deletePirate($index, pirate._id)">X</span>
-</li>
-```
-
 - change that to `/pirates/{{ pirate._id }}`
-- pirate-detail.component.js
+- Add the $http.get to `pirate-detail.component.js`:
 
 ```js
 angular.module('pirateDetail').component('pirateDetail', {
@@ -463,7 +457,9 @@ angular.module('pirateDetail').component('pirateDetail', {
 });
 ```
 
-- template 
+Test.
+
+- create the full template 
 
 ```html
 <dl>
@@ -478,7 +474,7 @@ angular.module('pirateDetail').component('pirateDetail', {
 <button type="submit" ng-click="$ctrl.back()">Back</button>
 ```
 
-accomodate the back button:
+accomodate the back button in `pirate-detail.component.js`:
 
 ```js
 angular.module('pirateDetail').component('pirateDetail', {
