@@ -2,6 +2,7 @@
 
 We are continuing from last week's Rest API session.
 
+```sh
 $ mongo
 > show dbs
 > use puppies
@@ -9,6 +10,7 @@ $ mongo
 > show collections
 > db.toys.insert({name: 'yoyo', color: 'red'})
 > db.toys.find()
+```
 
 Mongoose 
 - ORM object relational mapping
