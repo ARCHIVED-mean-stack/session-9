@@ -112,14 +112,13 @@ Add a layouts directory and copy and paste the following into it as `index.html`
 </html>
 ```
 
-Go to localhost:3004
+Go to `localhost:3004/layouts`
 
-Note - this page is unavaiable (even if it is in the root directory).
+This page is unavaiable (even if it is in the root directory).
 
 Add this route to server.js:
 
 ```
-
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/layouts/index.html');
 });
@@ -129,7 +128,7 @@ app.get('/', function(req, res) {
 
 Now we can access the page at localhost://300X however the we need to configure a static assets directory.
 
-Add a static directory for our assets to server.js
+Add a static directory (using middleware) for our assets to server.js
 
 `app.use(express.static('assets'))`
 
