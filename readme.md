@@ -243,9 +243,8 @@ $scope.deletePirate = function (index, pid) {
 </ul>
 ```
 
-Note - `ng-click="$ctrl.deletePirate($index, pirate._id)`
-is possible if we refer to `self/` in the controller: 
-`self.deletePirate = function (index, pid) {`
+Remember - `ng-click="$ctrl.deletePirate($index, pirate._id)`is preferable but we need to declare the variable `var self = this` and refer to it in the controller: `self.deletePirate = function (index, pid) {`
+
 ===
 
 ####Add Pirate
