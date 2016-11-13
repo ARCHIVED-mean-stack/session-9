@@ -92,7 +92,7 @@ Create and test a delete Pirate action in Postman.
 
 ##Building a Front End for Our API
 
-Add a layouts directory and into it `index.html`:
+Add a layouts directory and copy and paste the following into it as `index.html`:
 
 ```html
 <!DOCTYPE html>
@@ -112,6 +112,8 @@ Add a layouts directory and into it `index.html`:
 </html>
 ```
 
+Go to localhost:3004
+
 Note - this page is unavaiable (even if it is in the root directory).
 
 Add this route to server.js:
@@ -123,21 +125,19 @@ app.get('/', function(req, res) {
 });
 ```
 
-(Need to use an absolute path with res.sendFile. See this [post](http://stackoverflow.com/questions/25463423/res-sendfile-absolute-path).
-
-Create css, js, and img folders in static or reuse the assets material.
-
-Populate the js folder with app.module.js:
-
-```js
-angular.module('pirateApp', []);
-```
+(Need to use an absolute path with res.sendFile. See this [post](http://stackoverflow.com/questions/25463423/res-sendfile-absolute-path)).
 
 Now we can access the page at localhost://300X however the we need to configure a static assets directory.
 
 Add a static directory for our assets to server.js
 
 `app.use(express.static('assets'))`
+
+Populate the js folder with app.module.js:
+
+```js
+angular.module('pirateApp', []);
+```
 
 Add js/app.module.js to index.html (if its not there already).
 
