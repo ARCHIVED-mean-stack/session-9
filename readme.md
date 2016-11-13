@@ -11,7 +11,7 @@ $ mongo
 > db.toys.find()
 
 Mongoose 
-- ORM object relational management
+- ORM object relational mapping
 - a library that helps us talk to the database 
 - made by WordPress
 
@@ -23,7 +23,7 @@ Schema
 
 ===
 
-Install the dependencies `npm install` and run the app `nodemon server.js`. Go to `http://localhost:3004/api/pirates` to see the current crop of pirates. If none use `/api/import`.
+Install the dependencies `npm i` and run the app `nodemon server.js`. Go to `http://localhost:3004/api/pirates` to see the current crop of pirates. If none use `/api/import`.
 
 Test the current api's in Postman - 
 
@@ -93,7 +93,7 @@ Add a layouts directory and into it `index.html`:
 	<script src="https://code.angularjs.org/1.5.8/angular.js"></script>
 	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
 	<script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
-	<script src="js/app.js"></script>
+	<script src="js/app.module.js"></script>
 </head>
 
 <body>
@@ -106,27 +106,18 @@ Note - this page is unavaiable (even if it is in the root directory).
 
 Add this route to server.js:
 
-```js
-app.get('/', function(req, res) {
-    res.sendfile('./layouts/index.html')
-})
 ```
 
-Note - `express deprecated res.sendfile: Use res.sendFile instead`
-
-```
-var path = require('path');
-
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/layouts/index.html'));
+    res.sendFile(__dirname + '/layouts/index.html');
 });
 ```
 
-(See this [post](http://stackoverflow.com/questions/8131344/what-is-the-difference-between-dirname-and-in-node-js) and Node [documentation](https://nodejs.org/api/globals.html#globals_dirname) for information on `path` and `__dirname`.)
+(Need to use an absolute path with res.sendFile. See this [post](http://stackoverflow.com/questions/25463423/res-sendfile-absolute-path).
 
 Create css, js, and img folders in static or reuse the assets material.
 
-Populate the js folder with app.js:
+Populate the js folder with app.module.js:
 
 ```js
 angular.module('pirateApp', []);
@@ -138,11 +129,11 @@ Add a static directory for our assets to server.js
 
 `app.use(express.static('assets'))`
 
-Add js/app.js.
+Add js/app.module.js to index.html (if its not there already).
 
 Let's run a simple test by pulling in data from another API.
 
-app.js:
+app.module.js:
 
 ```js
 angular.module('pirateApp', [])
@@ -196,7 +187,7 @@ Add link to `css/styles.css`
 
 As a starting point reuse the array script. Recall the script from a previous lesson:
 
-In app.js:
+In app.module.js:
 
 ```js
 $scope.deletePirate = function(index) {
@@ -243,12 +234,15 @@ $scope.deletePirate = function (index, pid) {
 </ul>
 ```
 
+Note - `ng-click="$ctrl.deletePirate($index, pirate._id)`
+is possible if we refer to `self/` in the controller: 
+`self.deletePirate = function (index, pid) {`
 ===
 
 ####Add Pirate
 
 
-In app.js:
+In app.module.js:
 
 ```js
 $scope.addPirate = function (data) {
@@ -294,7 +288,7 @@ $scope.addPirate = function (data) {
 
 ###Create a Component for the Pirates View
 
-Start by editing app.js to contain just the module declaration
+Start by editing app.module.js to contain just the module declaration
 
 Save the rest into a new file called `pirates-view.component.js`:
 
@@ -379,7 +373,7 @@ Link it to the main index page:
 	<script src="https://code.angularjs.org/1.5.8/angular.js"></script>
 	<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>
 	<script src="https://code.angularjs.org/1.5.8/angular-animate.js"></script>
-	<script src="js/app.js"></script>
+	<script src="js/app.module.js"></script>
 	<script src="js/pirates-view.component.js"></script>
 </head>
 
@@ -415,8 +409,8 @@ index.html:
 Add routing and component for pirate details.
 
 - check that routing is loaded in index.html via `<script>` tag
-- in app.js inject the routing: `angular.module('pirateApp', ['ngRoute']);`
-- in app.js inject piratesView: `angular.module('pirateApp', ['ngRoute', 'piratesView']);`
+- in app.module.js inject the routing: `angular.module('pirateApp', ['ngRoute']);`
+- in app.module.js inject piratesView: `angular.module('pirateApp', ['ngRoute', 'piratesView']);`
 - create `pirates-view.module.js` as `angular.module('piratesView', []);` in js folder
 - add `app.config.js` to static js folder
 - add `<script src="js/app.config.js"></script>` to index.html
@@ -443,7 +437,7 @@ angular.module('pirateApp').
 
 ###Pirate detail
 
-- app.js `angular.module('pirateApp', ['ngRoute', 'piratesView', 'pirateDetail']);`
+- app.module.js `angular.module('pirateApp', ['ngRoute', 'piratesView', 'pirateDetail']);`
 - create `pirate-detail.module.js`
 - add to `pirate-detail.module.js` requiring ngRoute : `angular.module('pirateDetail', ['ngRoute']);`
 - add to index `<script src="js/pirate-detail.module.js"></script>`
