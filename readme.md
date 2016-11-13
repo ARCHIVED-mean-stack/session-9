@@ -33,11 +33,13 @@ Test the current api's in Postman -
 - get `localhost:3004/api/pirates/582280a9684c9c10232226ea`
 - put `localhost:3004/api/pirates/582280a9684c9c10232226ea` with `{ "name": "Test Tester" }` and check at `localhost:3004/api/pirates`
 
-Map these back to the controllers in pirates.js (All are mongo commands):
+Map these back to the controllers in pirates.js (all are mongo commands):
 
 - find({})
 - findOne({ '_id': id })
 - update({ '_id': id })
+
+These are mapped back to the HTTP verbs in routes.js:
 
 ####Add
 
