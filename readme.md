@@ -258,7 +258,22 @@ button {}
 
 And test.
 
-###Create a Component 
+Note we can add the same pirate twice leading to an error.
+
+Clear the form - pirate-view.component.js
+
+```js
+$scope.addPirate = function (data) {
+    $http.post('/api/pirates/', data)
+        .success(function (pirate) {
+            console.log('This is ' + pirate.name)
+            $scope.pirates.push(pirate);
+            $scope.pirate = {};
+        })
+};
+```
+
+###Create a Component for the Pirates View
 
 Start by editing app.js to contain just the module declaration
 
@@ -380,8 +395,6 @@ index.html:
 
 Add routing and component for pirate details.
 
-This can be tricky. Make sure to run through this again.
-
 - check that routing is loaded in index.html via `<script>` tag
 - in app.js inject the routing: `angular.module('pirateApp', ['ngRoute']);`
 - in app.js inject piratesView: `angular.module('pirateApp', ['ngRoute', 'piratesView']);`
@@ -437,7 +450,7 @@ angular.module('pirateDetail').component('pirateDetail', {
 
 In pirates-view.html we are currently going to an api endpoint `/api/pirates/{{ pirate._id }}` :
 
-- change that to `/pirates/{{ pirate._id }}`
+- change that to `#/pirates/{{ pirate._id }}` - note the pound
 - Add the $http.get to `pirate-detail.component.js`:
 
 ```js
@@ -498,7 +511,7 @@ angular.module('pirateDetail').component('pirateDetail', {
 });
 ```
 
-Set an absolute path:
+Set an absolute path. Note that we need to inject $location into the controller in obth the array and the function:
 
 ```js
 angular.module('pirateDetail').component('pirateDetail', {
@@ -507,8 +520,6 @@ angular.module('pirateDetail').component('pirateDetail', {
     controller: ['$http', '$routeParams', '$location',
         function PirateDetailController($http, $routeParams, $location) {
             var self = this;
-
-            console.log($routeParams.pirateId);
             $http.get('/api/pirates/' + $routeParams.pirateId)
                 .then(function (response) {
                     self.pirate = response.data;
@@ -521,6 +532,10 @@ angular.module('pirateDetail').component('pirateDetail', {
     ]
 });
 ```
+
+
+
+##HTML Forms
 
 
 
