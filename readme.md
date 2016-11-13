@@ -385,7 +385,7 @@ And test.
 
 Remember using $ctrl - `ng-click="$ctrl.deletePirate($index, pirate._id)`- is preferable but we need to declare the variable `var self = this` and refer to it in the controller: `self.deletePirate = function (index, pid) {`
 
-- create `pirates-view.module.js` as `angular.module('piratesView', []);` in js folder and link to it in index.html
+<!--- create `pirates-view.module.js` as `angular.module('piratesView', []);` in js folder and link to it in index.html-->
 
 ####Pirate Detail
 
@@ -405,13 +405,12 @@ In order to accomodate multiple views we need to use `ng-view` in index.html:
 and `ng-view` implies using `ng-route`
 
 
-####Routing in Angular
+####Routing for Views
 
 Add routing and component for pirate details.
 
 - check that routing is loaded in index.html via the `<script src="https://code.angularjs.org/1.5.8/angular-route.js"></script>` tag
-- in app.module.js inject the routing: `angular.module('pirateApp', ['ngRoute', 'piratesView']);`
-
+- inject ng-route: `angular.module('pirateApp', ['ngRoute', 'piratesView']);` in `app.module.js`
 - add `app.config.js` to static js folder
 - add `<script src="js/app.config.js"></script>` to index.html
 - add `<script src="js/pirates-view.module.js"></script>` to index.html
