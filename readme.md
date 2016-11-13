@@ -2,6 +2,25 @@
 
 We are continuing from last week's Rest API session.
 
+$ mongo
+> show dbs
+> use puppies
+> db.createCollection('toys')
+> show collections
+> db.toys.insert({name: 'yoyo', color: 'red'})
+> db.toys.find()
+
+Mongoose 
+- ORM object relational management
+- a library that helps us talk to the database 
+- made by WordPress
+
+Schema 
+- not really necessary with Mongo
+- Mongoose adds Schema
+- `mongoose.connect('mongods://...` is like `use` 
+
+
 ===
 
 Install the dependencies `npm install` and run the app `nodemon server.js`. Go to `http://localhost:3004/api/pirates` to see the current crop of pirates. If none use `/api/import`.
