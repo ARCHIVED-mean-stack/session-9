@@ -421,7 +421,6 @@ app.config:
 angular.module('pirateApp').
     config(['$locationProvider', '$routeProvider',
         function config($locationProvider, $routeProvider) {
-            // $locationProvider.hashPrefix('!');
             $routeProvider.
                 when('/', {
                     template: '<pirates-view></pirates-view>'
