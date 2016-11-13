@@ -243,8 +243,6 @@ $scope.deletePirate = function (index, pid) {
 </ul>
 ```
 
-Remember - `ng-click="$ctrl.deletePirate($index, pirate._id)`is preferable but we need to declare the variable `var self = this` and refer to it in the controller: `self.deletePirate = function (index, pid) {`
-
 ===
 
 ####Add Pirate
@@ -296,11 +294,17 @@ $scope.addPirate = function (data) {
 
 ###Create a Component for the Pirates View
 
+We are creating a module for the pirates view called `piratesView`.
+
 Start by editing app.module.js to contain just the module declaration
 
-Save the rest into a new file called `pirates-view.component.js`:
+Inject our new module into `app.module.js`:
 
-Edit the component 
+```js
+angular.module('pirateApp', ['piratesView']);
+```
+
+Paste the rest into a new file called `pirates-view.component.js` and edit it to create a component called piratesView:
 
 ```js
 angular.module('piratesView', []).component('piratesView', {
@@ -331,7 +335,7 @@ angular.module('piratesView', []).component('piratesView', {
 });
 ```
 
-Edit the html to create a link to the detail. Use the api Uri for now:
+Copy the HTML into `assets/templates/pirates-view.html` and edit the html to create a link to the detail. Use the api Uri for now:
 
 ```
 <li ng-repeat="pirate in pirates">
@@ -340,25 +344,7 @@ Edit the html to create a link to the detail. Use the api Uri for now:
 </li>
 ```
 
-Copy the HTML into `assets/templates/pirates-view.html`:
-
-```html
-<ul>
-	<li ng-repeat="pirate in pirates">
-		<a href="/api/pirates/{{ pirate._id }}">{{ pirate.name }}</a>
-		<span ng-click="deletePirate($index, pirate._id)">X</span>
-	</li>
-</ul>
-
-<form ng-submit="addPirate(pirate)">
-	<input type="text" ng-model="pirate.name" />
-	<input type="text" ng-model="pirate.vessel" />
-	<input type="text" ng-model="pirate.weapon" />
-	<input type="submit" value="Add Pirate">
-</form>
-```
-
-And edit the body:
+Edit the body in `index.html` to reference the new component:
 
 ```
 <body>
@@ -369,7 +355,7 @@ And edit the body:
 </body>
 ```
 
-Link it to the main index page:
+And link `js/pirates-view.component.js` to the main index page:
 
 ```
 <!DOCTYPE html>
@@ -395,7 +381,10 @@ Link it to the main index page:
 </html>
 ```
 
-And test
+And test.
+
+Remember using $ctrl - `ng-click="$ctrl.deletePirate($index, pirate._id)`- is preferable but we need to declare the variable `var self = this` and refer to it in the controller: `self.deletePirate = function (index, pid) {`
+
 
 ####Pirate Detail
 
