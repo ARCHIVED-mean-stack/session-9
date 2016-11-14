@@ -522,7 +522,7 @@ angular.module('pirateDetail').component('pirateDetail', {
 });
 ```
 
-Set an absolute path. Note that we need to inject $location into the controller in obth the array and the function:
+Set an absolute path. Note that we need to inject $location into the controller in both the array and the function:
 
 ```js
 angular.module('pirateDetail').component('pirateDetail', {
@@ -544,9 +544,6 @@ angular.module('pirateDetail').component('pirateDetail', {
 });
 ```
 
-
-
-##HTML Forms
 
 
 
