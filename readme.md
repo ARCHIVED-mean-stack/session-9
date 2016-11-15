@@ -436,10 +436,8 @@ angular.module('pirateApp').
 ###Pirate detail
 
 - app.module.js `angular.module('pirateApp', ['ngRoute', 'piratesView', 'pirateDetail']);`
-- create `pirate-detail.module.js`
-- add to `pirate-detail.module.js` requiring ngRoute : `angular.module('pirateDetail', ['ngRoute']);`
-- add to index `<script src="js/pirate-detail.module.js"></script>`
-- create `pirate-detail.component.js` in js 
+- create `pirate-detail.component.js`
+- add to `pirate-detail.component.js` requiring ngRoute : `angular.module('pirateDetail', ['ngRoute']);`
 - create `pirate-detail.html` in templates
 - add to index `<script src="js/pirate-detail.component.js"></script>`
 
@@ -448,7 +446,7 @@ pirate-detail.component.js
 In order to work with routing and extract route parameters
 
 ```js
-angular.module('pirateDetail').component('pirateDetail', {
+angular.module('pirateDetail', ['ngRoute']).component('pirateDetail', {
     templateUrl: '/templates/pirate-detail.html',
 
     controller: ['$http', '$routeParams',
