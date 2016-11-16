@@ -1,5 +1,8 @@
 #MEAN Session 9
 
+##Homework
+- add an 'import' button to the pirates app that will grab additional content using our import api
+
 We are continuing from last week's Rest API session.
 
 ```sh
