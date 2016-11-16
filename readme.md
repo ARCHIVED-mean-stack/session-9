@@ -2,6 +2,7 @@
 
 ##Homework
 - add an 'import' button to the pirates app that will grab additional content using our import api
+- prepare a propsal for a final project which includes a master / detail presentation
 
 We are continuing from last week's Rest API session.
 
