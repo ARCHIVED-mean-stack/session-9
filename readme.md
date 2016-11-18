@@ -377,7 +377,6 @@ And link `js/pirates-view.component.js` to the main index page:
 
 <body>
 	<div>
-		<h1>Pirates</h1>
 		<pirates-view></pirates-view>
 	</div>
 </body>
@@ -400,7 +399,6 @@ In order to accomodate multiple views we need to use `ng-view` in index.html:
 ```
 <body>
 	<div>
-		<h1>Pirates</h1>
 		<div ng-view></div>
 	</div>
 </body>
@@ -487,6 +485,7 @@ Test.
 - create the full template 
 
 ```html
+<h1>Pirate Detail View</h1>
 <dl>
     <dt>Name</dt>
     <dd>{{ $ctrl.pirate.name }}</dd>
