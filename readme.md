@@ -417,7 +417,6 @@ Add routing and component for pirate details.
 - inject ng-route: `angular.module('pirateApp', ['ngRoute', 'piratesView']);` in `app.module.js`
 - add `app.config.js` to static js folder
 - add `<script src="js/app.config.js"></script>` to index.html
-- add `<script src="js/pirates-view.module.js"></script>` to index.html
 
 app.config:
 
@@ -503,7 +502,7 @@ Test.
 accomodate the back button in `pirate-detail.component.js`:
 
 ```js
-angular.module('pirateDetail').component('pirateDetail', {
+angular.module('pirateDetail', []).component('pirateDetail', {
     templateUrl: '/templates/pirate-detail.html',
 
     controller: ['$http', '$routeParams',
@@ -527,7 +526,7 @@ angular.module('pirateDetail').component('pirateDetail', {
 Set an absolute path. Note that we need to inject $location into the controller in both the array and the function:
 
 ```js
-angular.module('pirateDetail').component('pirateDetail', {
+angular.module('pirateDetail', []).component('pirateDetail', {
     templateUrl: '/templates/pirate-detail.html',
 
     controller: ['$http', '$routeParams', '$location',
